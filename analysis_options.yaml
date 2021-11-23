@@ -1,0 +1,11 @@
+#include: package:effective_dart/analysis_options.yaml
+include: package:lint/analysis_options.yaml
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+
+linter:
+  rules:
+    public_member_api_docs: false
+    omit_local_variable_types: false
+    avoid_function_literals_in_foreach_calls: false

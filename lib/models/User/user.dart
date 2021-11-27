@@ -11,7 +11,7 @@ class User {
   String genere;
 
   User({this.age, this.email, this.genere, this.lastName, this.firstName});
-  factory User.fromJson(Map<String, dynamic> json) => _$UserToJson(json);
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }

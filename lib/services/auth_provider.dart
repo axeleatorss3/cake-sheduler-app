@@ -1,11 +1,10 @@
-import 'package:dio/dio.dart';
+import 'package:cake_scheduler/models/User/user.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/retrofit.dart';
-
-import '../models/User/user.dart';
 import '../services/api.dart';
 
-part 'user_providers.g.dart';
+part 'auth_provider.g.dart';
 
 @RestApi(baseUrl: baseUrl)
 abstract class RestClient {
@@ -16,5 +15,5 @@ abstract class RestClient {
   }
 
   @GET("/user/{id}")
-  Future<User> getUser(@Path('id') String id);
+  Future<User> getUser();
 }

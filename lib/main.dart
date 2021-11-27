@@ -1,25 +1,22 @@
+import 'package:cake_scheduler/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'blocs/bloc/auth_bloc.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiBlocProvider(
+    providers: [...providerList],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: const HomePage(),
@@ -35,10 +32,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomepageState extends State<HomePage> {
+  AuthBloc authBloc;
+
+  @override
+  void initState() {
+    // BlocProvider.of<AuthBloc>(context);
+
+    authBloc = BlocProvider.of<AuthBloc>(context)..add(InitialAuthEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [TextField()],
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: const Color(0xff0251ff),
+          ),
+          home: BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              if (state is AuthInitial) {
+                return Scaffold(
+                  backgroundColor: Colors.pink[100],
+                );
+              }
+              return Scaffold(
+                backgroundColor: Colors.blue[500],
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

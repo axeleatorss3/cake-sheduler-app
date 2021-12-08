@@ -26,6 +26,9 @@ class _CardFormLoginState extends State<CardFormLogin> {
                 filled: false,
                 contentPadding: EdgeInsets.all(20)),
           ),
+          SizedBox(
+            height: 30,
+          ),
           TextField(
             decoration: InputDecoration(
                 hintText: 'Password',

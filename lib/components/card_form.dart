@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CardFormLogin extends StatefulWidget {
-  const CardFormLogin() : super();
+  const CardFormLogin(this.focus) : super();
+  final FocusNode focus;
 
   @override
   _CardFormLoginState createState() => _CardFormLoginState();
@@ -19,6 +20,7 @@ class _CardFormLoginState extends State<CardFormLogin> {
       child: Column(
         children: [
           TextField(
+            onSubmitted: (value) => widget.focus.requestFocus(),
             decoration: InputDecoration(
                 hintText: 'Email',
                 fillColor: Colors.grey[350],
@@ -30,6 +32,7 @@ class _CardFormLoginState extends State<CardFormLogin> {
             height: 30,
           ),
           TextField(
+            focusNode: widget.focus,
             decoration: InputDecoration(
                 hintText: 'Password',
                 filled: false,

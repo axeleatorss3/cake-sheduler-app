@@ -1,5 +1,8 @@
 import 'package:cake_scheduler/components/card_form.dart';
+import 'package:cake_scheduler/components/pink_curve.dart';
+import 'package:cake_scheduler/components/purple_circle.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -9,7 +12,27 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
+  Animation<double> _animation;
+  AnimationController _animationController;
+  FocusNode myFocusNode;
+
+  @override
+  void initState() {
+    final _animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
+    _animationController.forward(from: 0.0);
+    myFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    myFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -17,88 +40,118 @@ class _LoginState extends State<Login> {
         return Scaffold(
             backgroundColor: Colors.pink[50],
             extendBody: true,
-            body: Column(
-              children: [
-                Expanded(
-                    flex: 5,
-                    child: Stack(children: [
-                      Positioned(
-                          bottom: 10,
-                          left: 30,
-                          child: Text(
-                            'Welcome \nBack',
-                            style: TextStyle(
-                                color: Colors.deepPurple.shade300,
-                                fontSize: 30,
-                                fontWeight: FontWeight.w500),
-                          ))
-                    ])),
-                Expanded(
-                    flex: 0,
-                    child: Padding(
-                        padding: EdgeInsets.all(20), child: CardFormLogin())),
-                Expanded(
-                    flex: 3,
+            body: SingleChildScrollView(
+                child: Container(
+                    height: MediaQuery.maybeOf(context).size.height,
+                    width: MediaQuery.maybeOf(context).size.width,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Container(
-                                    alignment: Alignment.centerLeft,
-                                    margin: EdgeInsets.only(left: 30),
-                                    child: Text(
-                                      'Sign in',
-                                      style: TextStyle(
-                                        color: Colors.deepPurple,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
+                        Expanded(
+                            flex: 5,
+                            child: Stack(children: [
+                              SizedBox(
+                                height: MediaQuery.maybeOf(context).size.height,
+                                width: MediaQuery.maybeOf(context).size.width,
+                                child: CustomPaint(
+                                  painter: CurvePainter(),
+                                ),
+                              ),
+                              SizedBox(
+                                height: MediaQuery.maybeOf(context).size.height,
+                                width: MediaQuery.maybeOf(context).size.width,
+                                child: CustomPaint(
+                                  painter: CurvePainter2(),
+                                ),
+                              ),
+                              Positioned(
+                                  bottom: 30,
+                                  left: 30,
+                                  child: FadeTransition(
+                                      opacity: _animation,
+                                      child: Text(
+                                        'Welcome \nBack',
+                                        style: TextStyle(
+                                            color: Colors.deepPurple.shade300,
+                                            fontSize: 35,
+                                            fontWeight: FontWeight.w500),
+                                      )))
+                            ])),
+                        Expanded(
+                            flex: 0,
+                            child: Padding(
+                                padding: EdgeInsets.all(20),
+                                child: CardFormLogin(myFocusNode))),
+                        Expanded(
+                            flex: 3,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            margin: EdgeInsets.only(right: 0),
+                                            child: Text(
+                                              'Sign in',
+                                              style: TextStyle(
+                                                color: Colors.deepPurple,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 25,
+                                              ),
+                                            ))),
+                                    Expanded(
+                                        child: Container(
+                                            height: 40,
+                                            margin: EdgeInsets.all(10),
+                                            child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    primary: Colors.deepPurple,
+                                                    minimumSize: Size(10, 10),
+                                                    shape: StadiumBorder(),
+                                                    elevation: 3.0),
+                                                onPressed: () => null,
+                                                child:
+                                                    Icon(Icons.arrow_forward))))
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                        child: Center(
+                                          child: Text(
+                                            'Sign up',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                decoration:
+                                                    TextDecoration.underline),
+                                          ),
+                                        ),
                                       ),
-                                    ))),
-                            Expanded(
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Colors.deepPurple),
-                                    onPressed: () => null,
-                                    child: Icon(Icons.arrow_forward)))
-                          ],
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                child: Center(
-                                  child: Text(
-                                    'Sign up',
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        decoration: TextDecoration.underline),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: GestureDetector(
-                                child: Center(
-                                  child: Text(
-                                    'Forgot password',
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        decoration: TextDecoration.underline),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
+                                    ),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        child: Center(
+                                          child: Text(
+                                            'Forgot password',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                decoration:
+                                                    TextDecoration.underline),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ))
                       ],
-                    ))
-              ],
-            ));
+                    ))));
       },
     );
   }

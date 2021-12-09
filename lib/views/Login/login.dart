@@ -64,7 +64,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                                 ),
                               ),
                               Positioned(
-                                  bottom: 30,
+                                  bottom: 40,
                                   left: 30,
                                   child: FadeTransition(
                                       opacity: _animation,

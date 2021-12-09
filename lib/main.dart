@@ -1,4 +1,6 @@
 import 'package:cake_scheduler/providers.dart';
+import 'package:cake_scheduler/routes/router.dart' as router;
+import 'package:cake_scheduler/routes/routes_name.dart';
 import 'package:cake_scheduler/views/Login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +20,8 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         return MaterialApp(
+          onGenerateRoute: router.Router.generateRoute,
+          initialRoute: homePageRoute,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               primaryColor: Colors.purple[900],

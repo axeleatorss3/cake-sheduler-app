@@ -1,6 +1,6 @@
 import 'package:cake_scheduler/views/Login/login.dart';
-import 'package:cake_scheduler/views/Login/sign_in_page.dart';
-import 'package:cake_scheduler/views/Login/sing_up_page.dart';
+import 'package:cake_scheduler/views/Login/sign_in.dart';
+import 'package:cake_scheduler/views/Login/sing_up_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:cake_scheduler/routes/routes_name.dart';
 
@@ -10,8 +10,6 @@ class Router {
       case homePageRoute:
         return MaterialPageRoute(builder: (_) => Login());
       case singInRoute:
-        return MaterialPageRoute(builder: (_) => SignInPage());
-      case singUpRoute:
         return MaterialPageRoute(builder: (_) => SignInPage());
       default:
         return MaterialPageRoute(
